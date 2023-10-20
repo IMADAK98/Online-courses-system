@@ -1,7 +1,4 @@
 package com.emad.spring.RestControllers;
-
-import com.emad.spring.Entity.Course;
-import com.emad.spring.Entity.Instructor;
 import com.emad.spring.Entity.Review;
 import com.emad.spring.Service.ReviewService;
 import jakarta.validation.Valid;

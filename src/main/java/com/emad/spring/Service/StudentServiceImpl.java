@@ -1,25 +1,15 @@
 package com.emad.spring.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
-import org.springframework.stereotype.Service;
-
 import com.emad.spring.Dao.StudentRepository;
 import com.emad.spring.Entity.Course;
-import com.emad.spring.Entity.Instructor;
 import com.emad.spring.Entity.Student;
 import com.emad.spring.Exceptions.InvalidIdException;
 import com.emad.spring.Exceptions.ObjectNotFoundException;
-
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Transactional

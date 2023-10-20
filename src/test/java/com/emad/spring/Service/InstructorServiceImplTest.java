@@ -1,33 +1,28 @@
 package com.emad.spring.Service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-
-import java.util.List;
-import java.util.Optional;
-
-
+import com.emad.spring.Dao.InstructorRepository;
 import com.emad.spring.Entity.Course;
+import com.emad.spring.Entity.Instructor;
 import com.emad.spring.Entity.InstructorDetails;
 import com.emad.spring.Exceptions.ObjectNotFoundException;
-import org.hibernate.ObjectDeletedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import com.emad.spring.Dao.InstructorRepository;
-import com.emad.spring.Entity.Instructor;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class InstructorServiceImplTest {

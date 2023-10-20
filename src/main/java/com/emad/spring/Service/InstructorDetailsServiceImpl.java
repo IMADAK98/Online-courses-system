@@ -1,18 +1,13 @@
 package com.emad.spring.Service;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.emad.spring.Dao.InstructorDetailsRepository;
+import com.emad.spring.Entity.InstructorDetails;
+import com.emad.spring.Exceptions.InvalidIdException;
+import com.emad.spring.Exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.emad.spring.Dao.InstructorDetailsRepository;
-import com.emad.spring.Entity.Instructor;
-import com.emad.spring.Entity.InstructorDetails;
-import com.emad.spring.Exceptions.ObjectNotFoundException;
-import com.emad.spring.Exceptions.InvalidIdException;
-
-import jakarta.transaction.Transactional;
+import java.util.List;
 
 @Service
 

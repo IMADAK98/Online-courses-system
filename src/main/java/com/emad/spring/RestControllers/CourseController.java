@@ -1,16 +1,9 @@
 package com.emad.spring.RestControllers;
-
 import java.util.List;
-
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.emad.spring.Entity.Course;
-import com.emad.spring.Entity.Student;
-import com.emad.spring.Service.CourseService;
 import com.emad.spring.Service.CourseServiceImpl;
 @RestController
 @RequestMapping("/api/v1")
