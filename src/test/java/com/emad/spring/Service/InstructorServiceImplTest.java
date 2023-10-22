@@ -28,8 +28,7 @@ import static org.mockito.Mockito.when;
 class InstructorServiceImplTest {
 	@Mock
 	private InstructorRepository instructorRepository;
-	@Mock
-	private Instructor testInstructor ;
+
 	@Mock
 	private InstructorDetailsServiceImpl instructorDetailsServiceImpl;
 	@Mock
