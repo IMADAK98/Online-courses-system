@@ -49,10 +49,9 @@ public class StudentController {
 	public ResponseEntity<Student>setCourse (@PathVariable int studentId , @PathVariable int courseId){
 		return new ResponseEntity<Student>(studentServiceImpl.setCourse(studentId, courseId),HttpStatus.OK);
 	}
-	@GetMapping("Students/{courseId}/courses")
+	@GetMapping("Students/courses/{courseId}/courses")
 	  public List<Student> findStudentByCoursesId(@PathVariable int courseId) {
-	    List<Student> tempList = studentServiceImpl.findStudentByCoursesId(courseId);
-	    return tempList;
+        return studentServiceImpl.findStudentByCoursesId(courseId);
 	    
 	  }
 }

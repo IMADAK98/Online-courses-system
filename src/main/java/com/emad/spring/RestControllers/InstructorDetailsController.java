@@ -38,7 +38,7 @@ public class InstructorDetailsController {
 	}
 	
 	
-	@PostMapping("/Instructor_Details/{id}")
+	@PutMapping("/Instructor_Details/{instructorDetailsId}")
 	public ResponseEntity<InstructorDetails> updateInstructorDetails(@RequestBody InstructorDetails instructorDetails
 			,@PathVariable int instructorDetailsId) {
 		return new ResponseEntity<>
@@ -48,7 +48,7 @@ public class InstructorDetailsController {
 	}
 	
 	
-	@DeleteMapping("/Instructor_Details/{id}")
+	@DeleteMapping("/Instructor_Details/detail/{id}")
 	public ResponseEntity<Void> deleteInstructorDetails(@PathVariable int id) {
 		instructorDetailsServiceImpl.deleteInstructorDetails(id);
 		return ResponseEntity.ok().build();

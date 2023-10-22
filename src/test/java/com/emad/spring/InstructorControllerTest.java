@@ -1,5 +1,4 @@
 package com.emad.spring;
-
 import com.emad.spring.Dao.InstructorRepository;
 import com.emad.spring.Entity.Instructor;
 import com.emad.spring.RestControllers.InstructorController;

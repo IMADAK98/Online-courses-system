@@ -40,7 +40,7 @@ public class CourseController  {
 		return new ResponseEntity<Course>(courseServiceImpl.updateCourse(course, courseID), HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/Courses/{courseID}")
+	@DeleteMapping("/Courses/course/{courseID}")
 	public ResponseEntity<Void> deleteCourse(@PathVariable int courseID){
 		return ResponseEntity.ok().build();
 	}
@@ -50,7 +50,7 @@ public class CourseController  {
 		return new ResponseEntity<Course>(courseServiceImpl.setStudent(courseId, studentId),HttpStatus.OK);		
 	}
 	
-	@GetMapping("Courses/{studentId}/courses")
+	@GetMapping("Courses/Students/{studentId}/courses")
 	public List<Course> findCourseByStudentsId(@PathVariable int studentId){
 		return courseServiceImpl.findCourseByStudentsId(studentId);
 	}

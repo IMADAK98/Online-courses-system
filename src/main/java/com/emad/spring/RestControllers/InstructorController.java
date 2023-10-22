@@ -62,7 +62,7 @@ public class InstructorController {
 	}
 	
 	
-	@PostMapping("/Instructors_Courses/{instructorId}/{courseId}")
+	@PostMapping("/Instructors/Courses/{instructorId}/{courseId}")
 	public ResponseEntity<Instructor> addCourse(@PathVariable int instructorId , @PathVariable int courseId)
 	{
 		return new ResponseEntity<Instructor>(instructorServiceImpl.addCourse(instructorId, courseId), HttpStatus.OK);
