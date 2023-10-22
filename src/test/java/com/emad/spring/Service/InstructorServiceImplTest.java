@@ -28,7 +28,8 @@ import static org.mockito.Mockito.when;
 class InstructorServiceImplTest {
 	@Mock
 	private InstructorRepository instructorRepository;
-
+	@Mock
+	private Instructor testInstructor ;
 	@Mock
 	private InstructorDetailsServiceImpl instructorDetailsServiceImpl;
 	@Mock
@@ -171,36 +172,29 @@ class InstructorServiceImplTest {
 
 
 	@Test
-	public void testAddCourse() {
-		// Arrange
-		int instructorId = 1;
-		int courseId = 2;
+	public void testCanAddInstructor() {
+		// Given
+		int instructorId = 0;
+		int courseId = 0;
 
-		// Create a new Instructor instance for the test
 		Instructor tempInstructor = new Instructor("TestFirstName", "TestLastName", "test@example.com");
-
-		// Log the initial state of the tempInstructor
-		System.out.println("Initial tempInstructor: " + tempInstructor);
+		Course course = new Course("Programming");
 
 		when(instructorRepository.findById(instructorId)).thenReturn(Optional.of(tempInstructor));
+		when(courseServiceImpl.findCourseById(courseId)).thenReturn(course);
+		when(instructorRepository.save(tempInstructor)).thenReturn(tempInstructor); // Return the same instructor
 
-		Course tempCourse = new Course("programming");
-		when(courseServiceImpl.findCourseById(courseId)).thenReturn(tempCourse);
+		// When
+		Instructor resultInstructor = serviceUnderTest.addCourse(instructorId, courseId);
 
-		// Act
-		Instructor result = serviceUnderTest.addCourse(instructorId, courseId);
 
-		// Assert
-		verify(instructorRepository).findById(instructorId);
-		verify(courseServiceImpl).findCourseById(courseId);
-
-		// Log the state of tempInstructor after the method call
-		System.out.println("tempInstructor after method call: " + tempInstructor);
-
+		// Then
+		assertTrue(resultInstructor.getCourses().contains(course));
 		verify(instructorRepository).save(tempInstructor);
-		assertThat(result).isEqualTo(tempInstructor);
-		assertThat(tempInstructor.getCourses()).contains(tempCourse);
 	}
+
+
+
 }
 
 
