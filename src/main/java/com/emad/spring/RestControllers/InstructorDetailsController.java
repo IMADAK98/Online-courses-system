@@ -1,7 +1,7 @@
 package com.emad.spring.RestControllers;
 
 import com.emad.spring.Entity.InstructorDetails;
-import com.emad.spring.Service.InstructorDetailsServiceImpl;
+import com.emad.spring.Service.Implementation.InstructorDetailsServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,18 +22,18 @@ public class InstructorDetailsController {
 	
 	@GetMapping("/Instructor_Details")
 	public List<InstructorDetails> getAllInstructorDetails(){
-		return instructorDetailsServiceImpl.getAllInstructorDetails();
+		return instructorDetailsServiceImpl.getAll();
 	}
 	
 	@GetMapping("/Instructor_Details/{id}")
 	public ResponseEntity<InstructorDetails> getInstructorDetailById(@PathVariable int id) {
-		return new ResponseEntity<>(instructorDetailsServiceImpl.getInstructorDetailsById(id),
+		return new ResponseEntity<>(instructorDetailsServiceImpl.getById(id),
 				HttpStatus.OK);
 	}
 	
 	@PostMapping("/Instructor_Details")
 	public ResponseEntity<Void> createInstructorDetails(@RequestBody InstructorDetails instructorDetails) {
-		instructorDetailsServiceImpl.createInstructorDetails(instructorDetails);
+		instructorDetailsServiceImpl.create(instructorDetails);
 		return ResponseEntity.ok().build();
 	}
 	
@@ -43,14 +43,14 @@ public class InstructorDetailsController {
 			,@PathVariable int instructorDetailsId) {
 		return new ResponseEntity<>
 				(instructorDetailsServiceImpl.
-						updateInstructorDetails(instructorDetails , instructorDetailsId)
+						update(instructorDetails , instructorDetailsId)
 						,HttpStatus.OK);
 	}
 	
 	
 	@DeleteMapping("/Instructor_Details/detail/{id}")
 	public ResponseEntity<Void> deleteInstructorDetails(@PathVariable int id) {
-		instructorDetailsServiceImpl.deleteInstructorDetails(id);
+		instructorDetailsServiceImpl.delete(id);
 		return ResponseEntity.ok().build();
 	}
 	

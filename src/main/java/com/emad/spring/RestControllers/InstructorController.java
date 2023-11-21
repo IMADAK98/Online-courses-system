@@ -3,7 +3,7 @@ package com.emad.spring.RestControllers;
 import com.emad.spring.Entity.Instructor;
 import com.emad.spring.Exceptions.ExceptionResponse;
 import com.emad.spring.Exceptions.ObjectNotFoundException;
-import com.emad.spring.Service.InstructorServiceImpl;
+import com.emad.spring.Service.Implementation.InstructorServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin(origins = "http://localhost:4200")
 public class InstructorController {
 	
 	private final InstructorServiceImpl instructorServiceImpl;
@@ -26,31 +27,31 @@ public class InstructorController {
 
 	@GetMapping("/Instructors")
 	public List<Instructor> getAllInstructors(){
-		return instructorServiceImpl.getAllInstructors();
+		return instructorServiceImpl.getAll();
 	}
 	
 	@GetMapping("/Instructors/{id}")
 	public ResponseEntity<Instructor> getInstructorById(@PathVariable int id) {
-		return new ResponseEntity<>(instructorServiceImpl.getInstructorById(id)
+		return new ResponseEntity<>(instructorServiceImpl.getById(id)
 		,HttpStatus.OK);
 	}
 	
 	@PostMapping("/Instructors")
 	public ResponseEntity<Instructor> createInstructor(@Valid @RequestBody  Instructor instructor  ) {	
-		Instructor createdInstructor = instructorServiceImpl.createInstructor(instructor);
+		Instructor createdInstructor = instructorServiceImpl.create(instructor);
 		return new ResponseEntity<Instructor>(createdInstructor ,HttpStatus.OK);
 	}
 	
 	@PutMapping("/Instructors/{instructorId}")
 	public ResponseEntity<Instructor> updateInstructor(@Valid @RequestBody Instructor instructor , @PathVariable int instructorId) {
 		return new  ResponseEntity<Instructor>
-				(instructorServiceImpl.updateInstructor(instructor , instructorId)
+				(instructorServiceImpl.update(instructor , instructorId)
 				,HttpStatus.OK);
 	}
 	
 	@DeleteMapping("Instructors/instructor/{instructorId}")
 	public ResponseEntity<Void> deleteInstructor(@PathVariable int instructorId) {
-		instructorServiceImpl.deleteInstructor(instructorId);
+		instructorServiceImpl.delete(instructorId);
 		return ResponseEntity.ok().build();
 	}
 	

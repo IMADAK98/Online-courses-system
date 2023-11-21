@@ -1,4 +1,4 @@
-package com.emad.spring.Service;
+package com.emad.spring.Service.Implementation;
 
 import com.emad.spring.Dao.CourseRepository;
 import com.emad.spring.Entity.Course;
@@ -6,6 +6,7 @@ import com.emad.spring.Entity.Review;
 import com.emad.spring.Entity.Student;
 import com.emad.spring.Exceptions.InvalidIdException;
 import com.emad.spring.Exceptions.ObjectNotFoundException;
+import com.emad.spring.Service.Interfaces.CourseService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -47,26 +48,24 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<Course> getAllCourses() {
+	public List<Course> getAll() {
 		// TODO Auto-generated method stub
 		return courseRepository.findAll();
 	}
 
 	@Override
-	public Course createCourse(Course course) {
+	public Course create(Course course) {
 		return courseRepository.save(course);
 	}
 
-	@Override
-	public Course findCourseById(int courseId) {
+	public Course getById(Integer courseId) {
 		validateId(courseId);
 		return courseRepository.findById(courseId)
 				.orElseThrow( ()-> new ObjectNotFoundException("object is null")
 		);
 	}
 	
-	@Override
-	public Course updateCourse(Course course , int courseID) {
+	public Course update(Course course , Integer courseID) {
 		validateId(courseID);
 
 		Course existingCourse = courseRepository.findById(courseID)
@@ -77,7 +76,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 
-	public void deleteCourse(int courseId) {
+	public void delete(Integer courseId) {
 		validateId(courseId);
 		courseRepository.findById(courseId)
 				.ifPresentOrElse(
@@ -95,7 +94,7 @@ public class CourseServiceImpl implements CourseService {
 			Course tempCourse = courseRepository.findById(courseId)
 				.orElseThrow(()-> new ObjectNotFoundException("null course object")
 				);
-			Student tempStudent = studentServiceImpl.findStudentById(studentId);
+			Student tempStudent = studentServiceImpl.getById(studentId);
 			tempCourse.addStudent(tempStudent);
 
 		return courseRepository.save(tempCourse);
@@ -111,7 +110,7 @@ public class CourseServiceImpl implements CourseService {
 		validateId(courseId,reviewId);
 		Course tempCourse = courseRepository.findById(courseId)
 				.orElseThrow(()->new ObjectNotFoundException("Course object is null"));
-		Review tempReview =reviewServiceImpl.getReviewById(reviewId);
+		Review tempReview =reviewServiceImpl.getById(reviewId);
 		tempReview.setCourse(tempCourse);
 		return courseRepository.save(tempCourse);
 	}

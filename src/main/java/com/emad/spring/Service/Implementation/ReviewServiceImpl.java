@@ -1,10 +1,11 @@
-package com.emad.spring.Service;
+package com.emad.spring.Service.Implementation;
 
 import com.emad.spring.Dao.ReviewRepository;
 import com.emad.spring.Entity.Course;
 import com.emad.spring.Entity.Review;
 import com.emad.spring.Exceptions.InvalidIdException;
 import com.emad.spring.Exceptions.ObjectNotFoundException;
+import com.emad.spring.Service.Interfaces.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -12,12 +13,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
 
 
     private ReviewRepository reviewRepository;
 
-    private  CourseServiceImpl courseService;
+    private CourseServiceImpl courseService;
     @Autowired
     public ReviewServiceImpl(ReviewRepository reviewRepository,
                              @Lazy CourseServiceImpl courseService) {
@@ -29,12 +30,11 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public List<Review> getAllReviews() {
+    public List<Review> getAll() {
         return reviewRepository.findAll();
     }
 
-    @Override
-    public Review getReviewById(int reviewId) {
+    public Review getById(Integer reviewId) {
         validateId(reviewId);
         return reviewRepository.findById(reviewId)
                 .orElseThrow(
@@ -43,13 +43,13 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public Review createReview(Review review) {
+    public Review create(Review review) {
          return reviewRepository.save(review);
 
     }
 
-    @Override
-    public Review updateReview(Review review ,int reviewId) {
+
+    public Review update(Review review , Integer reviewId) {
         validateId(reviewId);
         Review tempReview = reviewRepository.findById(reviewId)
                 .orElseThrow(()->new ObjectNotFoundException("Review object is null"));
@@ -57,8 +57,7 @@ public class ReviewServiceImpl implements ReviewService{
         return reviewRepository.save(tempReview);
     }
 
-    @Override
-    public void deleteReview(int reviewId) {
+    public void delete(Integer reviewId) {
             validateId(reviewId);
             reviewRepository.findById(reviewId)
                 .ifPresentOrElse(
@@ -72,7 +71,7 @@ public class ReviewServiceImpl implements ReviewService{
         validateId(reviewId,courseId);
         Review tempReview = reviewRepository.findById(reviewId)
                 .orElseThrow(()->new ObjectNotFoundException("Review is null"));
-        Course tempCourse = courseService.findCourseById(courseId);
+        Course tempCourse = courseService.getById(courseId);
 
         tempReview.setCourse(tempCourse);
         return reviewRepository.save(tempReview);

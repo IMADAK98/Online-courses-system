@@ -1,6 +1,6 @@
 package com.emad.spring.RestControllers;
 import com.emad.spring.Entity.Review;
-import com.emad.spring.Service.ReviewService;
+import com.emad.spring.Service.Interfaces.ReviewService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,25 +19,25 @@ public class ReviewController {
     }
     @GetMapping("/Reviews")
     public List<Review> getAllReviews(){
-        return reviewService.getAllReviews();
+        return reviewService.getAll();
     }
 
     @GetMapping("/Reviews/{id}")
     public ResponseEntity<Review> getReviewById(@PathVariable int id) {
-        return new ResponseEntity<>(reviewService.getReviewById(id)
+        return new ResponseEntity<>(reviewService.getById(id)
                 , HttpStatus.OK);
     }
 
     @PostMapping("/Reviews")
     public ResponseEntity<Review> createReview( @RequestBody  Review review  ) {
-        Review tempReview =reviewService.createReview(review);
+        Review tempReview =reviewService.create(review);
         return new ResponseEntity<>(tempReview ,HttpStatus.OK);
     }
 
     @PutMapping("/Reviews/{id}")
     public ResponseEntity<Review> updateInstructor(@Valid @RequestBody Review review , @PathVariable int id) {
         return new  ResponseEntity<Review>
-                (reviewService.updateReview(review , id)
+                (reviewService.update(review , id)
                         ,HttpStatus.OK);
     }
 

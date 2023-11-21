@@ -5,6 +5,9 @@ import com.emad.spring.Entity.Course;
 import com.emad.spring.Entity.Instructor;
 import com.emad.spring.Entity.InstructorDetails;
 import com.emad.spring.Exceptions.ObjectNotFoundException;
+import com.emad.spring.Service.Implementation.CourseServiceImpl;
+import com.emad.spring.Service.Implementation.InstructorDetailsServiceImpl;
+import com.emad.spring.Service.Implementation.InstructorServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -57,7 +60,7 @@ class InstructorServiceImplTest {
 	    when(instructorRepository.findAll()).thenReturn(mockList);
 
 	    // When
-	    List<Instructor> result = serviceUnderTest.getAllInstructors();
+	    List<Instructor> result = serviceUnderTest.getAll();
 
 	    // Then
 	    verify(instructorRepository).findAll(); // Expecting a single call to findAll()
@@ -68,7 +71,7 @@ class InstructorServiceImplTest {
 	void testCanCreateInstructor() {
 		//when
 		when(instructorRepository.save(mockInstructor)).thenReturn(mockInstructor);
-		serviceUnderTest.createInstructor(mockInstructor);
+		serviceUnderTest.create(mockInstructor);
 		
 		//then 
 		verify(instructorRepository).save(instArgumentCaptor.capture());
@@ -85,7 +88,7 @@ class InstructorServiceImplTest {
 		int instructorId = 1;
 		//when
 		when(instructorRepository.findById(instructorId)).thenReturn(Optional.ofNullable(mockInstructor));
-		serviceUnderTest.getInstructorById(instructorId);
+		serviceUnderTest.getById(instructorId);
 		// then
 
 		verify(instructorRepository).findById(instructorId);
@@ -99,7 +102,7 @@ class InstructorServiceImplTest {
 		// when
 		when(instructorRepository.findById(instId)).thenReturn(Optional.empty());
 		assertThrows(ObjectNotFoundException.class , ()-> {
-			serviceUnderTest.getInstructorById(instId);
+			serviceUnderTest.getById(instId);
 		});
 		verify(instructorRepository).findById(instId);
 	}
@@ -116,7 +119,7 @@ class InstructorServiceImplTest {
 
 		// Act
 		System.out.println(existingInstructor);
-		Instructor result = serviceUnderTest.updateInstructor(updatedInstructor, instructorId);
+		Instructor result = serviceUnderTest.update(updatedInstructor, instructorId);
 		System.out.println(existingInstructor);
 		// Assert
 		verify(instructorRepository).findById(instructorId);
@@ -138,7 +141,7 @@ class InstructorServiceImplTest {
 		when(instructorRepository.findById(instructorId)).thenReturn(Optional.of(mockInstructor));
 
 		// Act
-		assertDoesNotThrow(() -> serviceUnderTest.deleteInstructor(instructorId));
+		assertDoesNotThrow(() -> serviceUnderTest.delete(instructorId));
 
 		// Assert
 		verify(instructorRepository).findById(instructorId);
@@ -157,14 +160,14 @@ class InstructorServiceImplTest {
 		when(instructorRepository.findById(instructorId)).thenReturn(Optional.of(tempInstructor));
 
 		InstructorDetails tempInstructorDetails = new InstructorDetails("code123","coding");
-		when(instructorDetailsServiceImpl.getInstructorDetailsById(instructorDetailsId)).thenReturn(tempInstructorDetails);
+		when(instructorDetailsServiceImpl.getById(instructorDetailsId)).thenReturn(tempInstructorDetails);
 
 		// Act
 		serviceUnderTest.setInstructorDetails(instructorId, instructorDetailsId);
 
 		// Assert
 		verify(instructorRepository).findById(instructorId);
-		verify(instructorDetailsServiceImpl).getInstructorDetailsById(instructorDetailsId);
+		verify(instructorDetailsServiceImpl).getById(instructorDetailsId);
 		verify(instructorRepository).save(tempInstructor);
 		assertThat(tempInstructor.getInstructorDetails()).isEqualTo(tempInstructorDetails);
 	}
@@ -180,7 +183,7 @@ class InstructorServiceImplTest {
 		Course course = new Course("Programming");
 
 		when(instructorRepository.findById(instructorId)).thenReturn(Optional.of(tempInstructor));
-		when(courseServiceImpl.findCourseById(courseId)).thenReturn(course);
+		when(courseServiceImpl.getById(courseId)).thenReturn(course);
 		when(instructorRepository.save(tempInstructor)).thenReturn(tempInstructor); // Return the same instructor
 
 		// When

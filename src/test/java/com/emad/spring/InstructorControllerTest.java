@@ -2,7 +2,7 @@ package com.emad.spring;
 import com.emad.spring.Dao.InstructorRepository;
 import com.emad.spring.Entity.Instructor;
 import com.emad.spring.RestControllers.InstructorController;
-import com.emad.spring.Service.InstructorServiceImpl;
+import com.emad.spring.Service.Implementation.InstructorServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,7 +47,7 @@ public class InstructorControllerTest {
 				Instructor("imad", "issam", "valid@gmail.com");
 		mockList = new ArrayList<>();
 		mockList.add(mockInstructor);
-		when(instructorServiceImpl.getAllInstructors()).thenReturn(mockList);
+		when(instructorServiceImpl.getAll()).thenReturn(mockList);
 	}
 
 
@@ -59,7 +59,7 @@ public class InstructorControllerTest {
 		// Mock the service method to return the mockInstructor when called with
 		// instructorId
 		mockInstructor.setId(instructorId);
-		when(instructorServiceImpl.getInstructorById(instructorId)).thenReturn(mockInstructor);
+		when(instructorServiceImpl.getById(instructorId)).thenReturn(mockInstructor);
 
 		// Perform the GET request
 		mockMvc.perform(
@@ -143,7 +143,7 @@ public class InstructorControllerTest {
 		 // then
 		ArgumentCaptor<Instructor> instructorCaptor = ArgumentCaptor.forClass(Instructor.class);
 
-		verify(instructorServiceImpl).createInstructor(instructorCaptor.capture());
+		verify(instructorServiceImpl).create(instructorCaptor.capture());
 		assertThat(instructorCaptor.getValue().getFirstName()).isEqualTo("imad");
 		assertThat(instructorCaptor.getValue().getLastName()).isEqualTo("issam");
 		assertThat(instructorCaptor.getValue().getEmail()).isEqualTo("valid@gmail.com");
@@ -160,7 +160,7 @@ public class InstructorControllerTest {
 				delete(UrlConstants.DELETE_MAPPING, id)				
 				).andExpect(status().isOk());
 
-		verify(instructorServiceImpl,times(1)).deleteInstructor(id);
+		verify(instructorServiceImpl,times(1)).delete(id);
 	}
 }
 

@@ -1,4 +1,4 @@
-package com.emad.spring.Service;
+package com.emad.spring.Service.Implementation;
 
 import com.emad.spring.Dao.InstructorRepository;
 import com.emad.spring.Entity.Course;
@@ -6,6 +6,7 @@ import com.emad.spring.Entity.Instructor;
 import com.emad.spring.Entity.InstructorDetails;
 import com.emad.spring.Exceptions.InvalidIdException;
 import com.emad.spring.Exceptions.ObjectNotFoundException;
+import com.emad.spring.Service.Interfaces.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,9 @@ import java.util.List;
 
 public class InstructorServiceImpl implements InstructorService {
 	private  InstructorRepository instructorRepository;
-	private  InstructorDetailsServiceImpl instructorDetailsServiceImpl;
+	private InstructorDetailsServiceImpl instructorDetailsServiceImpl;
 
-	private  CourseServiceImpl courseServiceImpl;
+	private CourseServiceImpl courseServiceImpl;
 	
 	
 	@Autowired
@@ -39,26 +40,26 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
-	public List<Instructor> getAllInstructors() {
-			return instructorRepository.findAll();
+	public List<Instructor> getAll() {
+		return instructorRepository.findAll();
 	}
 
 	@Override
-	public Instructor getInstructorById(int instructorId) {
-		validateId(instructorId);
-		return instructorRepository.findById(instructorId)
+	public Instructor getById(Integer id) {
+		validateId(id);
+		return instructorRepository.findById(id)
 				.orElseThrow(()-> new ObjectNotFoundException("Object is null"));
 	}
 
 
 	@Override
 	// Add verification 
-	public Instructor createInstructor(Instructor instructor) {
+	public Instructor create(Instructor instructor) {
 		return  instructorRepository.save(instructor);
 	}
 
 	@Override
-	public void deleteInstructor(int instructorId) {
+	public void delete(Integer instructorId) {
 		validateId(instructorId);
 		instructorRepository.findById(instructorId)
 				.ifPresentOrElse(
@@ -69,7 +70,7 @@ public class InstructorServiceImpl implements InstructorService {
 
 
 	@Override
-	public Instructor updateInstructor (Instructor instructor , int instructorId){
+	public Instructor update (Instructor instructor , Integer instructorId){
 		validateId(instructorId);
 		return instructorRepository.findById(instructorId)
 				.map(
@@ -95,7 +96,7 @@ public class InstructorServiceImpl implements InstructorService {
 				);
 
 		InstructorDetails tempInstructorDetails =
-				instructorDetailsServiceImpl.getInstructorDetailsById(instructorDetailsId);
+				instructorDetailsServiceImpl.getById(instructorDetailsId);
 
 		tempInstructor.setInstructorDetails(tempInstructorDetails);
 		instructorRepository.save(tempInstructor);
@@ -109,7 +110,7 @@ public class InstructorServiceImpl implements InstructorService {
 				.orElseThrow(
 						()-> new ObjectNotFoundException("instructor does not exist !!!")
 				);
-		Course tempCourse = courseServiceImpl.findCourseById(courseId);
+		Course tempCourse = courseServiceImpl.getById(courseId);
 		tempInstructor.add(tempCourse);
 		return instructorRepository.save(tempInstructor);
 	}
@@ -124,6 +125,9 @@ public class InstructorServiceImpl implements InstructorService {
 			}
 		}
 	}
+
+
+
 
 
 }

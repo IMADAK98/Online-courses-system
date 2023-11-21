@@ -1,7 +1,7 @@
 package com.emad.spring.RestControllers;
 
 import com.emad.spring.Entity.Student;
-import com.emad.spring.Service.StudentService;
+import com.emad.spring.Service.Interfaces.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,22 +22,22 @@ public class StudentController {
 
 	@GetMapping("/Students")
 	public List<Student> getAllStudents(){
-		return studentServiceImpl.getAllStudents() ;
+		return studentServiceImpl.getAll() ;
 	}
 	
 	@PostMapping("/Students")
 	public ResponseEntity<Student> createStudent(@RequestBody Student student){
-		return new ResponseEntity<Student>(studentServiceImpl.createStudent(student), HttpStatus.OK);
+		return new ResponseEntity<Student>(studentServiceImpl.create(student), HttpStatus.OK);
 	}
 	
 	@GetMapping("/Students/{id}")
 	public ResponseEntity<Student> getStudent(@PathVariable int id) {
-		return new ResponseEntity<Student>(studentServiceImpl.findStudentById(id), HttpStatus.OK);
+		return new ResponseEntity<Student>(studentServiceImpl.getById(id), HttpStatus.OK);
 	}
 	
 	@PostMapping("Students/{id}")
 	public ResponseEntity<Student> updateStudent(@RequestBody Student student, @PathVariable int id ){
-		return new ResponseEntity<Student>(studentServiceImpl.updateStudent(student, id), HttpStatus.OK);
+		return new ResponseEntity<Student>(studentServiceImpl.update(student, id), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("Students/{id}")

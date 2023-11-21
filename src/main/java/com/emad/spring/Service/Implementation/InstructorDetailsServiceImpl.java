@@ -1,9 +1,10 @@
-package com.emad.spring.Service;
+package com.emad.spring.Service.Implementation;
 
 import com.emad.spring.Dao.InstructorDetailsRepository;
 import com.emad.spring.Entity.InstructorDetails;
 import com.emad.spring.Exceptions.InvalidIdException;
 import com.emad.spring.Exceptions.ObjectNotFoundException;
+import com.emad.spring.Service.Interfaces.InstructorDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,20 +28,19 @@ public class InstructorDetailsServiceImpl implements InstructorDetailsService {
 
 
 	@Override
-	public void createInstructorDetails(InstructorDetails instructorDetails) {
-		instructorDetailsRepository.save(instructorDetails);
-		
-	}
+	public InstructorDetails create(InstructorDetails instructorDetails) {
+		return	instructorDetailsRepository.save(instructorDetails);
+    }
 
 
 	@Override
-	public List<InstructorDetails> getAllInstructorDetails() {
+	public List<InstructorDetails> getAll() {
 		return instructorDetailsRepository.findAll();
 	}
 	
 
 	@Override
-	public InstructorDetails getInstructorDetailsById(int InstructoDetailsId)  {
+	public InstructorDetails getById(Integer InstructoDetailsId)  {
 		validateId(InstructoDetailsId);
 		return instructorDetailsRepository.findById(InstructoDetailsId)
 				.orElseThrow(()-> new ObjectNotFoundException("Object is null"));
@@ -48,7 +48,7 @@ public class InstructorDetailsServiceImpl implements InstructorDetailsService {
 
 
 	@Override
-	public void deleteInstructorDetails (int instructorDetailsId){
+	public void delete (Integer instructorDetailsId){
 		validateId(instructorDetailsId);
 		instructorDetailsRepository.findById(instructorDetailsId)
 				.ifPresentOrElse(
@@ -64,7 +64,7 @@ public class InstructorDetailsServiceImpl implements InstructorDetailsService {
 
 
 	@Override
-	public InstructorDetails updateInstructorDetails(InstructorDetails instructorDetails, int instructorDetailsId){
+	public InstructorDetails update(InstructorDetails instructorDetails, Integer instructorDetailsId){
 		validateId(instructorDetailsId);
 		return instructorDetailsRepository.findById(instructorDetailsId)
 				.map(
