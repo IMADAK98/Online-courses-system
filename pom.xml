@@ -9,7 +9,7 @@
 		<version>3.1.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.luv2code</groupId>
+	<groupId>com.mad98</groupId>
 	<artifactId>Emad-Rest-Project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Emad-Rest-Project</name>
